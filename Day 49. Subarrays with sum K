@@ -1,0 +1,18 @@
+class Solution {
+    public int countSubarrays(int arr[], int k) {
+        // code here
+        HashMap<Integer, Integer> prefixSumFreq = new HashMap<>();
+        int count = 0;
+        int sum = 0;
+        
+        prefixSumFreq.put(0, 1);
+        for(int num : arr){
+            sum += num;
+            if(prefixSumFreq.containsKey(sum - k)){
+                count += prefixSumFreq.get(sum - k);
+            }
+            prefixSumFreq.put(sum, prefixSumFreq.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+}
