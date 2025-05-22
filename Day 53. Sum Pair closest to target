@@ -1,0 +1,39 @@
+class Solution {
+    public List<Integer> sumClosest(int[] arr, int target) {
+        // code here
+        if(arr == null || arr.length < 2){
+            return new ArrayList<>();
+        }
+        Arrays.sort(arr);
+        int left = 0;
+        int right = arr.length - 1;
+        
+       
+        int minDiff = Integer.MAX_VALUE;
+        int ans1 = -1;
+        int ans2 = -1;
+        
+        while(left < right) {
+            int sum = arr[left] + arr[right];
+            int diff = Math.abs(sum - target);
+            
+            if(diff < minDiff){
+                minDiff = diff;
+               
+                ans1 = arr[left];
+                ans2 = arr[right];
+            }
+            if(sum < target){
+                left++;
+            }
+            else {
+                right--;
+            }
+        }
+        if(ans1 == -1 && ans2 == -1){
+            return new ArrayList<>();
+        }
+        return Arrays.asList(ans1, ans2);
+        
+    }
+}
