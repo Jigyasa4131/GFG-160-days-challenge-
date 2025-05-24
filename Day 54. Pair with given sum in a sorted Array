@@ -1,0 +1,46 @@
+// User function Template for Java
+
+class Solution {
+
+    int countPairs(int arr[], int target) {
+        // Complete the function
+        int i = 0;
+        int j = arr.length - 1;
+        int count = 0;
+        
+        while(i < j) {
+            int sum = arr[i] + arr[j];
+            
+            if(sum == target) {
+                if(arr[i] == arr[j]){
+                    int n = j - i + 1;
+                    count += (n * (n - 1)) / 2;
+                    break;
+                }
+                else{
+                    int countLeft = 1;
+                    while(i + 1 < j && arr[i] == arr[i + 1]){
+                        countLeft++;
+                        i++;
+                    }
+                    int countRight = 1;
+                    while(j - 1 > i && arr[j] == arr[j - 1]){
+                        countRight++;
+                        j--;
+                    }
+                    count += countLeft * countRight;
+                    i++;
+                    j--;
+                }
+                
+            }
+            else if(sum < target) {
+                i++;
+            }
+            else {
+                j--;
+            }
+        }
+        return count;
+    }
+}
