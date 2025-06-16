@@ -1,0 +1,37 @@
+// User function Template for Java
+
+class Solution {
+    public ArrayList<ArrayList<Integer>> nQueen(int n) {
+        // code here
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        int[] board = new int[n];
+        boolean[] cols = new boolean[n];
+        boolean[] d1 = new boolean[2 * n]; // for "\" diagonals
+        boolean[] d2 = new boolean[2 * n]; // for "/" diagonals
+        
+        solve(0, n , board, cols, d1, d2, res);
+        return res;
+    }
+    private void solve(int row, int n, int[] board, boolean[] cols, boolean[] d1, boolean[] d2, ArrayList<ArrayList<Integer>> res){
+        if(row == n){
+            ArrayList<Integer>ans = new ArrayList<>();
+            for(int i = 0; i < n; i++){
+                ans.add(board[i] + 1); // +1 for 1-based index
+            }
+            res.add(ans);
+            return;
+        }
+        
+        for(int col = 0; col < n; col++){
+            if(!cols[col] && !d1[row - col + n] && !d2[row + col]){
+                board[row] = col;
+                
+                cols[col] = d1[row - col + n] = d2[row + col] = true;
+                
+                solve(row + 1, n, board, cols, d1, d2, res);
+                
+                cols[col] = d1[row - col + n] = d2[row + col] = false; // backtrack
+            }
+        }
+    }
+}
