@@ -1,0 +1,35 @@
+/*
+Node defined as
+class Node{
+    int data;
+    Node left,right;
+    Node(int d){
+        data=d;
+        left=right=null;
+    }
+}
+*/
+
+class Solution {
+    // Function to return maximum path sum from any node in a tree.
+    int maxSum;
+    int findMaxSum(Node node) {
+        // your code goes here
+        maxSum = Integer.MIN_VALUE;
+        helper(node);
+        return maxSum;
+    }
+    int helper(Node node){
+        if(node == null){
+            return 0;
+        }
+        
+        int left = Math.max(0, helper(node.left));
+        int right = Math.max(0, helper(node.right));
+        
+        int localMax = node.data + left + right;
+        maxSum = Math.max(maxSum , localMax);
+        
+        return node.data + Math.max(left, right);
+    }
+}
