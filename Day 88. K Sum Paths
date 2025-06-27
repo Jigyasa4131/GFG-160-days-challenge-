@@ -1,0 +1,42 @@
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
+
+class Solution {
+    public int sumK(Node root, int k) {
+        // code here
+        return countKSumPaths(root, k, new ArrayList<Integer>());
+    }
+    
+    private int countKSumPaths(Node node, int k, ArrayList<Integer> path){
+        if(node == null){
+            return 0;
+        }
+        
+        path.add(node.data);
+        
+        int sum = 0;
+        int count = 0;
+        for(int i = path.size() - 1; i >= 0; i--){
+            sum += path.get(i);
+            if(sum == k) count++;
+        }
+        
+        count += countKSumPaths(node.left, k, path);
+        count += countKSumPaths(node.right, k, path);
+        
+        path.remove(path.size() - 1);
+        
+        return count;
+    }
+}
