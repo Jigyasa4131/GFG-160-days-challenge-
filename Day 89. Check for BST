@@ -1,0 +1,25 @@
+class Solution {
+    // Function to check whether a Binary Tree is BST or not.
+    
+    Node prev = null;
+    boolean isBST(Node root) {
+        // code here.
+        return inorderCheck(root);
+    }
+    
+    boolean inorderCheck(Node node){
+        if(node == null){
+            return true;
+        }
+        if(!inorderCheck(node.left)){
+            return false;
+        }
+        
+        if(prev != null && node.data <= prev.data){
+            return false;
+        }
+        prev = node;
+        
+        return inorderCheck(node.right);
+    }
+}
