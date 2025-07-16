@@ -1,0 +1,32 @@
+class Solution {
+    public int evaluate(String[] arr) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (String token : arr) {
+            if (isOperator(token)) {
+                int b = stack.pop(); // second operand
+                int a = stack.pop(); // first operand
+                int result = applyOperator(a, b, token);
+                stack.push(result);
+            } else {
+                stack.push(Integer.parseInt(token)); // operand
+            }
+        }
+
+        return stack.pop(); // final result
+    }
+
+    private boolean isOperator(String s) {
+        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+    }
+
+    private int applyOperator(int a, int b, String op) {
+        switch (op) {
+            case "+": return a + b;
+            case "-": return a - b;
+            case "*": return a * b;
+            case "/": return a / b; // integer division
+        }
+        return 0;
+    }
+}
