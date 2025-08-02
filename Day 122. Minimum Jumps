@@ -1,0 +1,36 @@
+class Solution {
+    static int minJumps(int[] arr) {
+        // code here
+        int n = arr.length;
+        if (n <= 1) return 0;
+        if (arr[0] == 0) return -1;
+
+        int maxReach = arr[0]; // max index reachable
+        int steps = arr[0];    // steps we can still take
+        int jumps = 1;         // we start with first jump
+
+        for (int i = 1; i < n; i++) {
+            // If we've reached the end
+            if (i == n - 1) return jumps;
+
+            // Update maxReach
+            maxReach = Math.max(maxReach, i + arr[i]);
+
+            // Use a step to move to next index
+            steps--;
+
+            // If no more steps left
+            if (steps == 0) {
+                jumps++; // must do another jump
+
+                // Check if current position is beyond maxReach
+                if (i >= maxReach) return -1;
+
+                // Re-initialize steps
+                steps = maxReach - i;
+            }
+        }
+
+        return -1;
+    }
+}
