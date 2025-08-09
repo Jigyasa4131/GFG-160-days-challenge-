@@ -1,0 +1,31 @@
+class Solution {
+    public int countWays(String digits) {
+        // code here
+        int n = digits.length();
+        if (n == 0 || digits.charAt(0) == '0') return 0;
+
+        int mod = 1000000007;
+        int prev2 = 1; // dp[0]
+        int prev1 = 1; // dp[1]
+
+        for (int i = 1; i < n; i++) {
+            int curr = 0;
+
+            // Single digit check
+            if (digits.charAt(i) != '0') {
+                curr = (curr + prev1) % mod;
+            }
+
+            // Two digits check
+            int twoDigit = Integer.parseInt(digits.substring(i - 1, i + 1));
+            if (twoDigit >= 10 && twoDigit <= 26) {
+                curr = (curr + prev2) % mod;
+            }
+
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
+
+    }
+}
