@@ -1,0 +1,49 @@
+class Solution {
+    public int findMinCycle(int V, int[][] edges) {
+        int INF = (int)1e9;
+        int[][] dist = new int[V][V];
+        int[][] graph = new int[V][V]; // to store direct edges
+
+        // Initialize matrices
+        for (int i = 0; i < V; i++) {
+            Arrays.fill(dist[i], INF);
+            Arrays.fill(graph[i], INF);
+            dist[i][i] = 0;
+            graph[i][i] = 0;
+        }
+
+        // Add edges (undirected graph)
+        for (int[] e : edges) {
+            int u = e[0], v = e[1], w = e[2];
+            graph[u][v] = Math.min(graph[u][v], w);
+            graph[v][u] = Math.min(graph[v][u], w);
+            dist[u][v] = graph[u][v];
+            dist[v][u] = graph[v][u];
+        }
+
+        int ans = INF;
+
+        // Floyd-Warshall with cycle detection
+        for (int k = 0; k < V; k++) {
+            // Check for cycles using k as one vertex
+            for (int i = 0; i < k; i++) {
+                for (int j = i + 1; j < k; j++) {
+                    if (dist[i][j] < INF && graph[i][k] < INF && graph[k][j] < INF) {
+                        ans = Math.min(ans, dist[i][j] + graph[i][k] + graph[k][j]);
+                    }
+                }
+            }
+
+            // Standard Floyd-Warshall update
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (dist[i][k] < INF && dist[k][j] < INF) {
+                        dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+                    }
+                }
+            }
+        }
+
+        return (ans == INF) ? -1 : ans;
+    }
+}
