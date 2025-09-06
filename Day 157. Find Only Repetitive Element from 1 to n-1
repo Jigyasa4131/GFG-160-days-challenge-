@@ -1,0 +1,19 @@
+class Solution {
+    public int findDuplicate(int[] arr) {
+        int n = arr.length;
+        int xorArr = 0, xorRange = 0;
+
+        // XOR of array elements
+        for (int num : arr) {
+            xorArr ^= num;
+        }
+
+        // XOR of numbers from 1 to n-1
+        for (int i = 1; i <= n - 1; i++) {
+            xorRange ^= i;
+        }
+
+        // Duplicate = xorArr ^ xorRange
+        return xorArr ^ xorRange;
+    }
+}
