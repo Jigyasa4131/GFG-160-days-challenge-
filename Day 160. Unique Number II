@@ -1,0 +1,24 @@
+class Solution {
+    public int[] singleNum(int[] arr) {
+        int xor = 0;
+        for (int num : arr) {
+            xor ^= num; // XOR of all numbers = a ^ b
+        }
+        
+        // Get rightmost set bit
+        int rmsb = xor & -xor;
+        
+        int num1 = 0, num2 = 0;
+        for (int num : arr) {
+            if ((num & rmsb) != 0) {
+                num1 ^= num;  // belongs to group 1
+            } else {
+                num2 ^= num;  // belongs to group 2
+            }
+        }
+        
+        // Return in sorted order (GFG usually expects ascending)
+        if (num1 < num2) return new int[]{num1, num2};
+        else return new int[]{num2, num1};
+    }
+}
